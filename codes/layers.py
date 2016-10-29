@@ -53,8 +53,7 @@ class Linear(Layer):
 
     def forward(self, inputs):
         # Your codes here
-        # size_inputs = T.shape (inputs);
-        T.reshape(inputs, [self.inputs_dim])
+        inputs = T.reshape(inputs, [inputs.shape[0], self.inputs_dim])
         return T.dot(inputs, self.W) + self.b
 
     def params(self):

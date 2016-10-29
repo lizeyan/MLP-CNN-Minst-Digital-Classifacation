@@ -23,4 +23,4 @@ label_placeholder = T.fmatrix('label')
 model.compile(input_placeholder, label_placeholder, loss, optim)
 
 solve_net(model, train_data, train_label, test_data, test_label,
-          batch_size=32, max_epoch=10, disp_freq=1000, test_freq=1000)
+          batch_size=32, max_epoch=100, disp_freq=1000, test_freq=10000)

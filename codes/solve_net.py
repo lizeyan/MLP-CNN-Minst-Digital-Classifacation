@@ -1,6 +1,6 @@
 from utils import LOG_INFO
 import numpy as np
-
+import time
 
 def data_iterator(x, y, batch_size, shuffle=True):
     indx = range(len(x))
@@ -15,6 +15,7 @@ def data_iterator(x, y, batch_size, shuffle=True):
 def solve_net(model, train_x, train_y, test_x, test_y,
               batch_size, max_epoch, disp_freq, test_freq):
 
+    tic = time.time()
     iter_counter = 0
     loss_list = []
     accuracy_list = []
@@ -50,3 +51,5 @@ def solve_net(model, train_x, train_y, test_x, test_y,
                 LOG_INFO(msg)
                 test_acc = []
                 test_loss = []
+    toc = time.time()
+    print "Elapsed Time:%ds"%(toc-tic)
