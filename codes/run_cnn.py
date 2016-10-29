@@ -20,7 +20,7 @@ model.add(Softmax('softmax'))
 
 loss = CrossEntropyLoss(name='xent')
 
-optim = SGDOptimizer(learning_rate=0.01, weight_decay=0.005, momentum=0.9)
+optim = SGDOptimizer(learning_rate=0.001, weight_decay=0.005, momentum=0.9)
 
 input_placeholder = T.ftensor4('input')
 label_placeholder = T.fmatrix('label')

@@ -53,8 +53,8 @@ class Linear(Layer):
 
     def forward(self, inputs):
         # Your codes here
-        inputs = T.reshape(inputs, [inputs.shape[0], self.inputs_dim])
-        return T.dot(inputs, self.W) + self.b
+        inputs_shape = T.reshape(inputs, [inputs.shape[0], self.inputs_dim])
+        return T.dot(inputs_shape, self.W) + self.b
 
     def params(self):
         return [self.W, self.b]
@@ -64,14 +64,14 @@ class Convolution(Layer):
     def __init__(self, name, kernel_size, num_input, num_output, init_std):
         super(Convolution, self).__init__(name, trainable=True)
         # Determine ? in W_shape
-        W_shape = (kernel_size, kernel_size, num_input, num_output)
+        W_shape = (num_output, num_input, kernel_size, kernel_size)
         self.W = sharedX(np.random.randn(*W_shape) * init_std, name=name + '/W')
-        self.b = sharedX(np.zeros((num_output)), name=name + '/b')
+        self.b = sharedX(np.zeros(num_output), name=name + '/b')
 
     def forward(self, inputs):
         # Your codes here
         # hint: note how to add bias to a 4-D tensor?
-        return conv2d(inputs, self.W) + self.b.dimshuffle ('x', 0, 'x', 'x')
+        return conv2d(inputs, self.W) + self.b.dimshuffle('x', 0, 'x', 'x')
 
     def params(self):
         return [self.W, self.b]
