@@ -20,13 +20,13 @@ class SGDOptimizer(object):
         return updates
 
 
-class AdagradOptimizer(object):
-    def __init__(self, learning_rate, eps=1e-8):
-        self.lr = learning_rate
-        self.eps = eps
-
-    def get_updates(self, cost, params):
-        # Your codes here
-        # hint: implementation idea
-        #       cache += dx ** 2
-        #       p = p - self.lr * dx / (sqrt(cache) + self.eps)
+# class AdagradOptimizer(object):
+#     def __init__(self, learning_rate, eps=1e-8):
+#         self.lr = learning_rate
+#         self.eps = eps
+#
+#     def get_updates(self, cost, params):
+#         # Your codes here
+#         # hint: implementation idea
+#         #       cache += dx ** 2
+#         #       p = p - self.lr * dx / (sqrt(cache) + self.eps)

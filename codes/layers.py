@@ -23,6 +23,7 @@ class Relu(Layer):
 
     def forward(self, inputs):
         # Your codes here
+        return T.nnet.relu(inputs)
 
 
 class Sigmoid(Layer):
@@ -31,6 +32,7 @@ class Sigmoid(Layer):
 
     def forward(self, inputs):
         # Your codes here
+        return T.nnet.sigmoid(inputs)
 
 
 class Softmax(Layer):
@@ -39,16 +41,21 @@ class Softmax(Layer):
 
     def forward(self, inputs):
         # Your codes here
+        return T.nnet.softmax(inputs)
 
 
 class Linear(Layer):
     def __init__(self, name, inputs_dim, num_output, init_std):
         super(Linear, self).__init__(name, trainable=True)
+        self.inputs_dim = inputs_dim;
         self.W = sharedX(np.random.randn(inputs_dim, num_output) * init_std, name=name + '/W')
-        self.b = sharedX(np.zeros((num_output)), name=name + '/b')
+        self.b = sharedX(np.zeros(num_output), name=name + '/b')
 
     def forward(self, inputs):
         # Your codes here
+        # size_inputs = T.shape (inputs);
+        T.reshape(inputs, [self.inputs_dim])
+        return T.dot(inputs, self.W) + self.b
 
     def params(self):
         return [self.W, self.b]
@@ -58,13 +65,14 @@ class Convolution(Layer):
     def __init__(self, name, kernel_size, num_input, num_output, init_std):
         super(Convolution, self).__init__(name, trainable=True)
         # Determine ? in W_shape
-        W_shape = (?, ?, ?, ?)
+        W_shape = (kernel_size, kernel_size, num_input, num_output)
         self.W = sharedX(np.random.randn(*W_shape) * init_std, name=name + '/W')
         self.b = sharedX(np.zeros((num_output)), name=name + '/b')
 
     def forward(self, inputs):
         # Your codes here
         # hint: note how to add bias to a 4-D tensor?
+        return conv2d(inputs, self.W) + self.b.dimshuffle ('x', 0, 'x', 'x')
 
     def params(self):
         return [self.W, self.b]
@@ -78,3 +86,4 @@ class Pooling(Layer):
     def forward(self, inputs):
         # Your coders here
         # hint: enable ignore border mode
+        return pool_2d(inputs, [self.kernel_size, self.kernel_size], ignore_border=True)
